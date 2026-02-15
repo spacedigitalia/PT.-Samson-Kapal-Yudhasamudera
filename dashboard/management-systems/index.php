@@ -20,7 +20,6 @@ $breadcrumbs = [
 
 $auth = new AuthController($db);
 $controller = new SystemManagementController($db, $auth);
-// Data ada 2: ambil maksimal 2 record untuk ditampilkan
 $mgmtList = array_slice($controller->getAll(), 0, 2);
 ?>
 <section class="flex min-h-screen overflow-hidden">
@@ -53,14 +52,14 @@ $mgmtList = array_slice($controller->getAll(), 0, 2);
                         </div>
                     </div>
                     <?php if (count($mgmtList) < 2): ?>
-                    <div class="flex-shrink-0">
-                        <a href="/dashboard/management-systems/create.php"
-                            class="group flex items-center gap-2.5 rounded-2xl bg-gradient-to-r from-violet-600 to-purple-600 px-5 py-3 text-sm font-semibold text-white hover:from-violet-700 hover:to-purple-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
-                            <i class='bx bx-plus text-lg group-hover:rotate-90 transition-transform duration-300'></i>
-                            <span class="hidden sm:inline">Add Content</span>
-                            <span class="sm:hidden">Add</span>
-                        </a>
-                    </div>
+                        <div class="flex-shrink-0">
+                            <a href="/dashboard/management-systems/create.php"
+                                class="group flex items-center gap-2.5 rounded-2xl bg-gradient-to-r from-violet-600 to-purple-600 px-5 py-3 text-sm font-semibold text-white hover:from-violet-700 hover:to-purple-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                                <i class='bx bx-plus text-lg group-hover:rotate-90 transition-transform duration-300'></i>
+                                <span class="hidden sm:inline">Add Content</span>
+                                <span class="sm:hidden">Add</span>
+                            </a>
+                        </div>
                     <?php endif; ?>
                 </div>
             </div>
@@ -69,49 +68,49 @@ $mgmtList = array_slice($controller->getAll(), 0, 2);
         <?php if (!empty($mgmtList)): ?>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <?php foreach ($mgmtList as $mgmtData): ?>
-                <div class="rounded-3xl border border-slate-200 bg-white shadow-sm overflow-hidden">
-                    <div class="p-6">
-                        <div class="flex items-center justify-between mb-4">
-                            <h2 class="text-lg font-semibold text-slate-900"><?php echo htmlspecialchars($mgmtData['title']); ?></h2>
-                            <a href="/dashboard/management-systems/edit.php?id=<?php echo (int) $mgmtData['id']; ?>"
-                                class="inline-flex items-center gap-1 rounded-xl bg-blue-100 px-3 py-1.5 text-xs font-semibold text-blue-700 hover:bg-blue-200">
-                                <i class='bx bx-edit'></i> Edit
-                            </a>
-                        </div>
-                        <?php if (!empty(trim($mgmtData['description'] ?? ''))): ?>
-                            <p class="text-sm text-slate-600 mb-4"><?php echo htmlspecialchars($mgmtData['description']); ?></p>
-                        <?php endif; ?>
+                    <div class="rounded-3xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <h2 class="text-lg font-semibold text-slate-900"><?php echo htmlspecialchars($mgmtData['title']); ?></h2>
+                                <a href="/dashboard/management-systems/edit.php?id=<?php echo (int) $mgmtData['id']; ?>"
+                                    class="inline-flex items-center gap-1 rounded-xl bg-blue-100 px-3 py-1.5 text-xs font-semibold text-blue-700 hover:bg-blue-200">
+                                    <i class='bx bx-edit'></i> Edit
+                                </a>
+                            </div>
+                            <?php if (!empty(trim($mgmtData['description'] ?? ''))): ?>
+                                <p class="text-sm text-slate-600 mb-4"><?php echo htmlspecialchars($mgmtData['description']); ?></p>
+                            <?php endif; ?>
 
-                        <?php
-                        $list = $mgmtData['list'] ?? [];
-                        if (!empty($list)):
-                        ?>
-                            <ul class="space-y-2">
-                                <?php foreach ($list as $item): ?>
-                                    <li class="flex items-center gap-2 p-3 rounded-xl border border-slate-100 bg-slate-50/50">
-                                        <i class='bx bx-check text-violet-500'></i>
-                                        <span class="font-medium text-slate-900"><?php echo htmlspecialchars($item['title'] ?? ''); ?></span>
-                                    </li>
-                                <?php endforeach; ?>
-                            </ul>
-                        <?php endif; ?>
+                            <?php
+                            $list = $mgmtData['list'] ?? [];
+                            if (!empty($list)):
+                            ?>
+                                <ul class="space-y-2">
+                                    <?php foreach ($list as $item): ?>
+                                        <li class="flex items-center gap-2 p-3 rounded-xl border border-slate-100 bg-slate-50/50">
+                                            <i class='bx bx-check text-violet-500'></i>
+                                            <span class="font-medium text-slate-900"><?php echo htmlspecialchars($item['title'] ?? ''); ?></span>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            <?php endif; ?>
 
-                        <div class="flex flex-wrap items-center gap-4 pt-4 mt-4 border-t border-slate-200 text-xs text-slate-500">
-                            <span><i class='bx bx-user text-slate-400'></i> <?php echo htmlspecialchars($mgmtData['fullname'] ?? 'Unknown'); ?></span>
-                            <span><i class='bx bx-calendar text-slate-400'></i> <?php echo date('M d, Y', strtotime($mgmtData['created_at'])); ?></span>
+                            <div class="flex flex-wrap items-center gap-4 pt-4 mt-4 border-t border-slate-200 text-xs text-slate-500">
+                                <span><i class='bx bx-user text-slate-400'></i> <?php echo htmlspecialchars($mgmtData['fullname'] ?? 'Unknown'); ?></span>
+                                <span><i class='bx bx-calendar text-slate-400'></i> <?php echo date('M d, Y', strtotime($mgmtData['created_at'])); ?></span>
+                            </div>
                         </div>
                     </div>
-                </div>
                 <?php endforeach; ?>
             </div>
             <?php if (count($mgmtList) < 2): ?>
-            <div class="rounded-3xl border border-dashed border-slate-200 bg-slate-50/50 p-8 text-center">
-                <p class="text-sm text-slate-500 mb-3">Slot ke-2 masih kosong. Tambah data ke-2.</p>
-                <a href="/dashboard/management-systems/create.php"
-                    class="inline-flex items-center gap-2 rounded-xl bg-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-300 transition-all">
-                    <i class='bx bx-plus text-lg'></i> Add Data ke-2
-                </a>
-            </div>
+                <div class="rounded-3xl border border-dashed border-slate-200 bg-slate-50/50 p-8 text-center">
+                    <p class="text-sm text-slate-500 mb-3">Slot ke-2 masih kosong. Tambah data ke-2.</p>
+                    <a href="/dashboard/management-systems/create.php"
+                        class="inline-flex items-center gap-2 rounded-xl bg-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-300 transition-all">
+                        <i class='bx bx-plus text-lg'></i> Add Data ke-2
+                    </a>
+                </div>
             <?php endif; ?>
         <?php else: ?>
             <div class="rounded-3xl border border-slate-200 bg-white shadow-sm p-12 text-center">

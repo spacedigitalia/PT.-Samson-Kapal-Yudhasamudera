@@ -21,7 +21,7 @@ function navClass(string $key, string $active): string
     <div class="px-6 py-6 border-b border-slate-200 flex items-center justify-between">
         <div class="flex items-center gap-3">
             <div class="h-14 w-14 rounded-xl overflow-hidden">
-                <img src="/assets/logo.jpg" alt="PT Samson Sure" class="h-full w-full object-cover">
+                <img src="/public/logo.jpeg" alt="PT Samson Sure" class="h-full w-full object-cover">
             </div>
             <div>
                 <div class="text-base font-semibold leading-tight">PT. Samson Kapal Yudhasamudera</div>
@@ -141,7 +141,7 @@ function navClass(string $key, string $active): string
     <div class="px-4 py-4 border-t border-slate-200">
         <div class="flex items-center gap-3 px-3 py-3 rounded-2xl bg-slate-50 border border-slate-200">
             <div class="h-10 w-10 rounded-md overflow-hidden">
-                <img src="/assets/logo.jpg" alt="profile" />
+                <img src="/public/logo.jpeg" alt="profile" />
             </div>
             <div class="min-w-0">
                 <div class="text-sm font-semibold truncate">

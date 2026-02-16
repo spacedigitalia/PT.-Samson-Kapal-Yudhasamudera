@@ -1,3 +1,90 @@
+//======================= Main Nav Active Link =======================//
+document.addEventListener("DOMContentLoaded", function () {
+  const mainNav = document.getElementById("main-nav");
+  if (!mainNav) return;
+
+  const navLinks = mainNav.querySelectorAll(".nav-link");
+  const ACTIVE_CLASS = "text-[#f2e780]";
+  const INACTIVE_CLASS = "text-gray-300";
+
+  function setActiveLink(selector) {
+    navLinks.forEach(function (link) {
+      link.classList.remove(ACTIVE_CLASS);
+      link.classList.add(INACTIVE_CLASS);
+    });
+    const activeLinks = mainNav.querySelectorAll(selector);
+    activeLinks.forEach(function (link) {
+      link.classList.remove(INACTIVE_CLASS);
+      link.classList.add(ACTIVE_CLASS);
+    });
+  }
+
+  function getPathname() {
+    const p = window.location.pathname.replace(/\/$/, "");
+    return p || "/";
+  }
+
+  const isContactPage =
+    window.location.pathname.indexOf("contact") !== -1;
+
+  if (isContactPage) {
+    setActiveLink('.nav-link[data-nav-path="contact"]');
+  } else {
+    const hash = (window.location.hash || "").slice(1);
+    const sectionIds = ["moto", "jenis-kapal", "sistem-manajemen", "layanan-kami", "hubungi-kami"];
+    if (sectionIds.indexOf(hash) !== -1) {
+      setActiveLink('.nav-link[data-nav-section="' + hash + '"]');
+    } else {
+      setActiveLink('.nav-link[data-nav-section="beranda"]');
+    }
+  }
+
+  // On home: update active link on scroll by section in view
+  if (getPathname() === "/") {
+    const sectionIds = ["moto", "jenis-kapal", "sistem-manajemen", "layanan-kami", "hubungi-kami"];
+    const sectionEls = sectionIds
+      .map(function (id) {
+        return document.getElementById(id);
+      })
+      .filter(Boolean);
+
+    function updateActiveByScroll() {
+      const viewportTop = window.scrollY + 120;
+      let activeSection = "beranda";
+      sectionEls.forEach(function (el) {
+        if (el.offsetTop <= viewportTop) {
+          activeSection = el.id;
+        }
+      });
+      setActiveLink('.nav-link[data-nav-section="' + activeSection + '"]');
+    }
+
+    window.addEventListener("scroll", updateActiveByScroll, { passive: true });
+    window.addEventListener("hashchange", function () {
+      const hash = (window.location.hash || "").slice(1);
+      const sectionIds = ["moto", "jenis-kapal", "sistem-manajemen", "layanan-kami", "hubungi-kami"];
+      if (sectionIds.indexOf(hash) !== -1) {
+        setActiveLink('.nav-link[data-nav-section="' + hash + '"]');
+      } else {
+        setActiveLink('.nav-link[data-nav-section="beranda"]');
+      }
+    });
+    updateActiveByScroll();
+  }
+});
+
+//======================= AOS (Animate On Scroll) =======================//
+document.addEventListener("DOMContentLoaded", function () {
+  if (typeof AOS !== "undefined") {
+    AOS.init({
+      duration: 800,
+      easing: "ease-out-cubic",
+      once: true,
+      offset: 80,
+    });
+  }
+});
+
 //======================= Tailwind Config =======================//
 tailwind.config = {
   theme: {
@@ -190,4 +277,26 @@ document.addEventListener("DOMContentLoaded", function () {
       closeMobileMenu();
     }
   });
+});
+
+//======================= KPI Progress Bar Animation =======================//
+document.addEventListener("DOMContentLoaded", function () {
+  const section = document.getElementById("komitmen-kinerja");
+  const bars = document.querySelectorAll(".kpi-progress-bar");
+  if (!section || bars.length === 0) return;
+
+  const observer = new IntersectionObserver(
+    function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        bars.forEach(function (bar) {
+          const value = parseFloat(bar.getAttribute("data-value")) || 0;
+          bar.style.width = Math.min(100, value) + "%";
+        });
+        observer.unobserve(entry.target);
+      });
+    },
+    { rootMargin: "0px", threshold: 0.2 }
+  );
+  observer.observe(section);
 });

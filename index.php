@@ -210,7 +210,7 @@ $contactData = $contactController->getFirst();
         <section class="flex flex-col lg:flex-row">
             <!-- Left: Mission text (~60%) -->
             <div
-                class="flex-1 lg:flex-[0.6] flex flex-col justify-center px-4 md:px-12 lg:px-16 xl:px-20 py-10 lg:py-16 space-y-20">
+                class="flex-1 lg:flex-[0.6] flex flex-col justify-center px-4 md:px-12 lg:px-16 xl:px-20 py-0 lg:py-16 space-y-20 order-2 lg:order-1">
                 <h2 class="text-[#f2e780] text-xl md:text-2xl xl:text-5xl max-w-6xl font-medium leading-relaxed"
                     style="line-height: 1.3;" data-aos="fade-up">
                     <?= $missionData ? htmlspecialchars($missionData['title']) : 'Misi Kami: Pilar Keunggulan SKYS' ?>
@@ -238,7 +238,7 @@ $contactData = $contactController->getFirst();
             </div>
 
             <!-- Right: Image (~40%) -->
-            <div class="flex-1 lg:flex-[0.4] relative min-h-[320px] lg:min-h-0">
+            <div class="flex-1 lg:flex-[0.4] relative min-h-[320px] lg:min-h-0 order-1 lg:order-2">
                 <img src="<?= $missionData && !empty($missionData['image']) ? htmlspecialchars($missionData['image']) : 'assets/mission.jpg' ?>"
                     alt="Misi SKYS - Operasional" class="w-full h-full object-cover object-center"
                     data-aos="fade-left" />
